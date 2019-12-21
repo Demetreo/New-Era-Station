@@ -250,7 +250,19 @@
 		t = "[t] "
 	return t
 
-/// Returns a string with reserved characters and spaces before the first letter removed
+//Adds 'char' ahead of 'text' until there are 'count' characters total
+/proc/add_leading(text, count, char = " ")
+	var/charcount = count - length_char(text)
+	var/list/chars_to_add[max(charcount + 1, 0)]
+	return jointext(chars_to_add, char) + text
+
+//Adds 'char' behind 'text' until there are 'count' characters total
+/proc/add_trailing(text, count, char = " ")
+	var/charcount = count - length_char(text)
+	var/list/chars_to_add[max(charcount + 1, 0)]
+	return text + jointext(chars_to_add, char)
+
+//Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)
@@ -273,35 +285,13 @@
 
 /// Returns a string with the first element of the string capitalized.
 /proc/capitalize(t as text)
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+	. = t[1]
+	return uppertext(.) + copytext(t, 1 + length(.))
 
-/// Centers text by adding spaces to either side of the string.
-/proc/dd_centertext(message, length)
-	var/new_message = message
-	var/size = length(message)
-	var/delta = length - size
-	if(size == length)
-		return new_message
-	if(size > length)
-		return copytext(new_message, 1, length + 1)
-	if(delta == 1)
-		return new_message + " "
-	if(delta % 2)
-		new_message = " " + new_message
-		delta--
-	var/spaces = add_lspace("",delta/2-1)
-	return spaces + new_message + spaces
-
-/// Limits the length of the text. Note: MAX_MESSAGE_LEN and MAX_NAME_LEN are widely used for this purpose
-/proc/dd_limittext(message, length)
-	var/size = length(message)
-	if(size <= length)
-		return message
-	return copytext(message, 1, length + 1)
-
-//This proc fills in all spaces with the "replace" var (* by default) with whatever is in the other string at the same spot (assuming it is not a replace char). This is used for fingerprints
 /proc/stringmerge(text,compare,replace = "*")
-
+//This proc fills in all spaces with the "replace" var (* by default) with whatever
+//is in the other string at the same spot (assuming it is not a replace char).
+//This is used for fingerprints
 	var/newtext = text
 	if(length(text) != length(compare))
 		return 0
