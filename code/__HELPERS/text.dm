@@ -309,13 +309,16 @@
 				return 0
 	return newtext
 
-/// This proc returns the number of chars of the string that is the character. This is used for detective work to determine fingerprint completion.
 /proc/stringpercent(text,character = "*")
+//This proc returns the number of chars of the string that is the character
+//This is used for detective work to determine fingerprint completion.
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i <= length(text), i++)
-		var/a = copytext(text,i,i+1)
+	var/lentext = length(text)
+	var/a = ""
+	for(var/i = 1, i <= lentext, i += length(a))
+		a = text[i]
 		if(a == character)
 			count++
 	return count
@@ -381,29 +384,35 @@ This was coded to handle DNA gene-splicing.
 		into = ""
 	if(!istext(from))
 		from = ""
-	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
-
-	var/previous = 0
+	var/null_ascii = istext(null_char) ? text2ascii(null_char, 1) : null_char
+	var/copying_into = FALSE
+	var/char = ""
 	var/start = 1
-	var/end = length(into) + 1
-
-	for(var/i=1, i<end, i++)
-		var/ascii = text2ascii(from, i)
-		if(ascii == null_ascii)
-			if(previous != 1)
-				. += copytext(from, start, i)
-				start = i
-				previous = 1
+	var/end_from = length(from)
+	var/end_into = length(into)
+	var/into_it = 1
+	var/from_it = 1
+	while(from_it <= end_from && into_it <= end_into)
+		char = from[from_it]
+		if(text2ascii(char) == null_ascii)
+			if(!copying_into)
+				. += copytext(from, start, from_it)
+				start = into_it
+				copying_into = TRUE
 		else
-			if(previous != 0)
-				. += copytext(into, start, i)
-				start = i
-				previous = 0
+			if(copying_into)
+				. += copytext(into, start, into_it)
+				start = from_it
+				copying_into = FALSE
+		into_it += length(into[into_it])
+		from_it += length(char)
 
-	if(previous == 0)
-		. += copytext(from, start, end)
+	if(copying_into)
+		. += copytext(into, start)
 	else
-		. += copytext(into, start, end)
+		. += copytext(from, start, from_it)
+		if(into_it <= end_into)
+			. += copytext(into, into_it)
 
 //finds the first occurrence of one of the characters from needles argument inside haystack
 //it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
@@ -773,12 +782,13 @@ This was coded to handle DNA gene-splicing.
 
 /// Makes the message a lot dumber
 /proc/unintelligize(message)
-	var/prefix=copytext(message,1,2)
+	var/regex/word_boundaries = regex(@"\b[\S]+\b", "g")
+	var/prefix = message[1]
 	if(prefix == ";")
-		message = copytext(message,2)
-	else if(prefix in list(":","#"))
-		prefix += copytext(message,2,3)
-		message = copytext(message,3)
+		message = copytext(message, 1 + length(prefix))
+	else if(prefix in list(":", "#"))
+		prefix += message[1 + length(prefix)]
+		message = copytext(message, length(prefix))
 	else
 		prefix=""
 
