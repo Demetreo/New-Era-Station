@@ -790,21 +790,15 @@ This was coded to handle DNA gene-splicing.
 		prefix += message[1 + length(prefix)]
 		message = copytext(message, length(prefix))
 	else
-		prefix=""
+		prefix = ""
 
-	var/list/words = splittext(message," ")
 	var/list/rearranged = list()
-	for(var/i=1;i<=words.len;i++)
-		var/cword = pick(words)
-		words.Remove(cword)
-		var/suffix = copytext(cword,length(cword)-1,length(cword))
-		while(length(cword)>0 && (suffix in list(".",",",";","!",":","?")))
-			cword  = copytext(cword,1              ,length(cword)-1)
-			suffix = copytext(cword,length(cword)-1,length(cword)  )
+	while(word_boundaries.Find(message))
+		var/cword = word_boundaries.match
 		if(length(cword))
 			rearranged += cword
-	message = "[prefix][jointext(rearranged," ")]"
-	. = message
+	shuffle_inplace(rearranged)
+	return "[prefix][jointext(rearranged, " ")]"
 
 
 /proc/readable_corrupted_text(text)
