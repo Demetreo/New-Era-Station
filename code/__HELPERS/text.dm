@@ -250,7 +250,19 @@
 		t = "[t] "
 	return t
 
-/// Returns a string with reserved characters and spaces before the first letter removed
+//Adds 'char' ahead of 'text' until there are 'count' characters total
+/proc/add_leading(text, count, char = " ")
+	var/charcount = count - length_char(text)
+	var/list/chars_to_add[max(charcount + 1, 0)]
+	return jointext(chars_to_add, char) + text
+
+//Adds 'char' behind 'text' until there are 'count' characters total
+/proc/add_trailing(text, count, char = " ")
+	var/charcount = count - length_char(text)
+	var/list/chars_to_add[max(charcount + 1, 0)]
+	return text + jointext(chars_to_add, char)
+
+//Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)
@@ -273,35 +285,13 @@
 
 /// Returns a string with the first element of the string capitalized.
 /proc/capitalize(t as text)
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+	. = t[1]
+	return uppertext(.) + copytext(t, 1 + length(.))
 
-/// Centers text by adding spaces to either side of the string.
-/proc/dd_centertext(message, length)
-	var/new_message = message
-	var/size = length(message)
-	var/delta = length - size
-	if(size == length)
-		return new_message
-	if(size > length)
-		return copytext(new_message, 1, length + 1)
-	if(delta == 1)
-		return new_message + " "
-	if(delta % 2)
-		new_message = " " + new_message
-		delta--
-	var/spaces = add_lspace("",delta/2-1)
-	return spaces + new_message + spaces
-
-/// Limits the length of the text. Note: MAX_MESSAGE_LEN and MAX_NAME_LEN are widely used for this purpose
-/proc/dd_limittext(message, length)
-	var/size = length(message)
-	if(size <= length)
-		return message
-	return copytext(message, 1, length + 1)
-
-//This proc fills in all spaces with the "replace" var (* by default) with whatever is in the other string at the same spot (assuming it is not a replace char). This is used for fingerprints
 /proc/stringmerge(text,compare,replace = "*")
-
+//This proc fills in all spaces with the "replace" var (* by default) with whatever
+//is in the other string at the same spot (assuming it is not a replace char).
+//This is used for fingerprints
 	var/newtext = text
 	if(length(text) != length(compare))
 		return 0
@@ -319,13 +309,16 @@
 				return 0
 	return newtext
 
-/// This proc returns the number of chars of the string that is the character. This is used for detective work to determine fingerprint completion.
 /proc/stringpercent(text,character = "*")
+//This proc returns the number of chars of the string that is the character
+//This is used for detective work to determine fingerprint completion.
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i <= length(text), i++)
-		var/a = copytext(text,i,i+1)
+	var/lentext = length(text)
+	var/a = ""
+	for(var/i = 1, i <= lentext, i += length(a))
+		a = text[i]
 		if(a == character)
 			count++
 	return count
@@ -391,29 +384,35 @@ This was coded to handle DNA gene-splicing.
 		into = ""
 	if(!istext(from))
 		from = ""
-	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
-
-	var/previous = 0
+	var/null_ascii = istext(null_char) ? text2ascii(null_char, 1) : null_char
+	var/copying_into = FALSE
+	var/char = ""
 	var/start = 1
-	var/end = length(into) + 1
-
-	for(var/i=1, i<end, i++)
-		var/ascii = text2ascii(from, i)
-		if(ascii == null_ascii)
-			if(previous != 1)
-				. += copytext(from, start, i)
-				start = i
-				previous = 1
+	var/end_from = length(from)
+	var/end_into = length(into)
+	var/into_it = 1
+	var/from_it = 1
+	while(from_it <= end_from && into_it <= end_into)
+		char = from[from_it]
+		if(text2ascii(char) == null_ascii)
+			if(!copying_into)
+				. += copytext(from, start, from_it)
+				start = into_it
+				copying_into = TRUE
 		else
-			if(previous != 0)
-				. += copytext(into, start, i)
-				start = i
-				previous = 0
+			if(copying_into)
+				. += copytext(into, start, into_it)
+				start = from_it
+				copying_into = FALSE
+		into_it += length(into[into_it])
+		from_it += length(char)
 
-	if(previous == 0)
-		. += copytext(from, start, end)
+	if(copying_into)
+		. += copytext(into, start)
 	else
-		. += copytext(into, start, end)
+		. += copytext(from, start, from_it)
+		if(into_it <= end_into)
+			. += copytext(into, into_it)
 
 //finds the first occurrence of one of the characters from needles argument inside haystack
 //it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
@@ -783,28 +782,23 @@ This was coded to handle DNA gene-splicing.
 
 /// Makes the message a lot dumber
 /proc/unintelligize(message)
-	var/prefix=copytext(message,1,2)
+	var/regex/word_boundaries = regex(@"\b[\S]+\b", "g")
+	var/prefix = message[1]
 	if(prefix == ";")
-		message = copytext(message,2)
-	else if(prefix in list(":","#"))
-		prefix += copytext(message,2,3)
-		message = copytext(message,3)
+		message = copytext(message, 1 + length(prefix))
+	else if(prefix in list(":", "#"))
+		prefix += message[1 + length(prefix)]
+		message = copytext(message, length(prefix))
 	else
-		prefix=""
+		prefix = ""
 
-	var/list/words = splittext(message," ")
 	var/list/rearranged = list()
-	for(var/i=1;i<=words.len;i++)
-		var/cword = pick(words)
-		words.Remove(cword)
-		var/suffix = copytext(cword,length(cword)-1,length(cword))
-		while(length(cword)>0 && (suffix in list(".",",",";","!",":","?")))
-			cword  = copytext(cword,1              ,length(cword)-1)
-			suffix = copytext(cword,length(cword)-1,length(cword)  )
+	while(word_boundaries.Find(message))
+		var/cword = word_boundaries.match
 		if(length(cword))
 			rearranged += cword
-	message = "[prefix][jointext(rearranged," ")]"
-	. = message
+	shuffle_inplace(rearranged)
+	return "[prefix][jointext(rearranged, " ")]"
 
 
 /proc/readable_corrupted_text(text)
