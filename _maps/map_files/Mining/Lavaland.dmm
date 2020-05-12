@@ -4232,6 +4232,7 @@
 	opacity = 0;
 	req_access_txt = "54"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "WE" = (
