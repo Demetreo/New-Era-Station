@@ -23,14 +23,20 @@
 	player_minimum = 15
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/infiltration)
 
+/datum/uplink_item/stealthy_weapons/cqc
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/infiltration)
+
 /datum/uplink_item/stealthy_weapons/martialarts
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/infiltration)
 
+/datum/uplink_item/stealthy_weapons/martialartskarate
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/infiltration)
+
+/datum/uplink_item/stealthy_weapons/radbow
+	exclude_modes = list(/datum/game_mode/infiltration)
+
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
-
-/datum/uplink_item/suits/hardsuit/cybersun
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/infiltration) //nuke and clown ops get it for lower value
 
 /datum/uplink_item/device_tools/powersink
 	exclude_modes = list(/datum/game_mode/infiltration) //if they have this objective, they get a special one
@@ -38,16 +44,10 @@
 /datum/uplink_item/device_tools/singularity_beacon
 	exclude_modes = list(/datum/game_mode/infiltration) //no.
 
-/datum/uplink_item/cyber_implants/thermals
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
-
 /datum/uplink_item/badass/balloon
 	exclude_modes = list(/datum/game_mode/infiltration) //no.
 
-/datum/uplink_item/badass/bundle
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
-
-/datum/uplink_item/badass/surplus
+/datum/uplink_item/bundles_TC/contract_kit
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/infiltration)
 
 //Infiltrator shit
@@ -82,13 +82,13 @@
 
 /datum/uplink_item/services/fake_ion
 	name = "Fake Ion Storm"
-	desc = "Fakes an ion storm announcment. A good distraction, especially if the AI is weird anyway."
+	desc = "Fakes an ion storm announcement. A good distraction, especially if the AI is weird anyway."
 	item = /obj/item/service/ion
 	cost = 7
 
 /datum/uplink_item/services/fake_meteor
 	name = "Fake Meteor Announcement"
-	desc = "Fakes an meteor announcment. A good way to get any C4 on the station exterior, or really any small explosion, brushed off as a meteor hit."
+	desc = "Fakes an meteor announcement. A good way to get any C4 on the station exterior, or really any small explosion, brushed off as a meteor hit."
 	item = /obj/item/service/meteor
 	cost = 7
 

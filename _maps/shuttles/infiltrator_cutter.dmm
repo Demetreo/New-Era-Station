@@ -191,6 +191,9 @@
 /area/shuttle/hippie/stealthcruiser)
 "ax" = (
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/hippie/stealthcruiser)
 "ay" = (
@@ -219,13 +222,6 @@
 /area/shuttle/hippie/stealthcruiser)
 "aC" = (
 /obj/structure/table,
-/obj/item/circular_saw,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/cautery{
-	pixel_x = 4
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -337,9 +333,8 @@
 /area/shuttle/hippie/stealthcruiser)
 "aN" = (
 /obj/structure/table,
-/obj/item/retractor,
-/obj/item/hemostat,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/plasteel,
 /area/shuttle/hippie/stealthcruiser)
 "aO" = (
@@ -462,12 +457,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/hippie/stealthcruiser)
 "ba" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Syndicate Cutter APC";
-	pixel_x = -24;
-	req_access = 150
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
@@ -476,7 +465,14 @@
 	pixel_x = 24;
 	req_access = 150
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 8;
+	name = "Syndicate Cutter APC";
+	pixel_x = -24
+	},
 /turf/open/floor/plating,
 /area/shuttle/hippie/stealthcruiser)
 "bb" = (
@@ -608,12 +604,16 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
 /turf/open/floor/plating,
 /area/shuttle/hippie/stealthcruiser)
 "bl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plating,
 /area/shuttle/hippie/stealthcruiser)
 "bm" = (
@@ -786,7 +786,9 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 20
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plating,
 /area/shuttle/hippie/stealthcruiser)
 "bA" = (
@@ -862,7 +864,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/hippie/stealthcruiser)
 "bG" = (
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -870,6 +871,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/hippie/stealthcruiser)
 "bH" = (
@@ -1014,6 +1016,16 @@
 "bW" = (
 /turf/template_noop,
 /area/template_noop)
+"AO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/hippie/stealthcruiser)
 
 (1,1,1) = {"
 bW
@@ -1263,7 +1275,7 @@ bW
 ad
 aW
 bg
-bv
+AO
 ad
 bW
 bW

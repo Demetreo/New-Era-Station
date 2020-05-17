@@ -5,6 +5,7 @@
 GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie/stealthcruiser, /area/hippie/infiltrator_base)))
 
 /datum/objective/infiltrator
+	name = "Generic Infiltrator Objective!"
 	explanation_text = "Generic Infiltrator Objective!"
 	martyr_compatible = FALSE
 	var/item_type
@@ -17,8 +18,18 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 				new item_type(T)
 
 /datum/objective/infiltrator/exploit
+	name = "infiltrator exploit"
 	explanation_text = "Ensure there is at least 1 hijacked AI."
 	item_type = /obj/item/ai_hijack_device
+
+/datum/objective/infiltrator/exploit/admin_edit(mob/admin)
+	var/list/possible_targets = active_ais(1)
+	if(possible_targets.len)
+		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in possible_targets
+		target = new_target.mind
+	else
+		to_chat(admin, "No active AIs with minds, defaulting to any.")
+	update_explanation_text()
 
 /datum/objective/infiltrator/exploit/find_target(dupe_search_range)
 	var/list/possible_targets = active_ais()
@@ -44,7 +55,13 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 
 
 /datum/objective/infiltrator/power
+	name = "infiltrator power sink"
 	explanation_text = "Drain power from the station with a power sink."
+
+/datum/objective/infiltrator/power/admin_edit(mob/admin)
+	var/new_amount = input(admin,"Select target amount IN WATTS:", "Power sink target") as null|num
+	target_amount = max(0, new_amount) //don't know what would happen with a negative value, and don't want to find out.
+	update_explanation_text()
 
 /datum/objective/infiltrator/power/New()
 	target_amount = rand(MIN_POWER_DRAIN, MAX_POWER_DRAIN) //I don't do this in find_target(), because that is done AFTER New().
@@ -66,7 +83,11 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 
 
 /datum/objective/infiltrator/kidnap
+	name = "infiltrator kidnap"
 	explanation_text = "You were supposed to kidnap someone, but we couldn't find anyone to kidnap!"
+
+/datum/objective/infiltrator/kidnap/admin_edit(mob/admin)
+	admin_simple_target_pick(admin)
 
 /datum/objective/infiltrator/kidnap/find_target(dupe_search_range)
 	var/list/possible_targets = SSjob.get_living_heads()
@@ -87,6 +108,6 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 
 /datum/objective/infiltrator/kidnap/check_completion()
 	if (!target)
-		return TRUE //panela: prevents runtime; also considers complete if target wasn't found on find_target
+		return TRUE //new era: prevents runtime; also considers complete if target wasn't found on find_target
 	var/target_area = get_area(target.current)
 	return !target || (target.current && target.current.suiciding) || (considered_alive(target) && is_type_in_typecache(target_area, GLOB.infiltrator_kidnap_areas))
