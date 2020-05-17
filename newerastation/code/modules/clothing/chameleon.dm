@@ -1,5 +1,5 @@
 //yoinked from hippie (infiltrators) -- but edited to work in TG and better.
-//panela: fixed most cases of broken helmet sprites, but it still breaks if the disguised hardsuit doesn't have lights
+//new era: fixed most cases of broken helmet sprites, but it still breaks if the disguised hardsuit doesn't have lights
 //because the infiltrator hardsuit adds the toggle lights action, which tries to change between nonexistant on and off sprites
 //if you know how to fix that... do it. I've tried for about 12 hours total to no avail. Though, I AM dumb. - Trigg
 

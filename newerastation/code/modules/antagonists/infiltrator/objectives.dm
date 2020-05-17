@@ -5,7 +5,7 @@
 GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie/stealthcruiser, /area/hippie/infiltrator_base)))
 
 /datum/objective/infiltrator
-	name = "Generic Infiltrator Objective!"
+	name = "Generic Infiltrator Objective (you shouldn't see this)"
 	explanation_text = "Generic Infiltrator Objective!"
 	martyr_compatible = FALSE
 	var/item_type

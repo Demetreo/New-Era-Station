@@ -1,3 +1,4 @@
+//yoinked from hippie (infiltrators)
 /datum/dynamic_ruleset/roundstart/infiltrator
 	name = "Infiltration Unit"
 	antag_flag = ROLE_INFILTRATOR
