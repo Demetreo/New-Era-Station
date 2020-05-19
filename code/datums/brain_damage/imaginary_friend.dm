@@ -10,7 +10,8 @@
 /datum/brain_trauma/special/imaginary_friend/on_gain()
 	..()
 	make_friend()
-	get_ghost()
+	if (owner.stat != DEAD)
+		get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/on_life()
 	if(get_dist(owner, friend) > 9)

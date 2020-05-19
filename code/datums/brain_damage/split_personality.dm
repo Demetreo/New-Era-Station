@@ -15,7 +15,8 @@
 /datum/brain_trauma/severe/split_personality/on_gain()
 	..()
 	make_backseats()
-	get_ghost()
+	if (owner.stat != DEAD)
+		get_ghost()
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
