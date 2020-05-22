@@ -1,0 +1,5 @@
+author: SandPoot
+delete-after: true
+changes:
+  - rscadd: Widescreen
+  - rscadd: Widescreen toggle
