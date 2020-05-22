@@ -10,8 +10,7 @@
 /datum/brain_trauma/special/imaginary_friend/on_gain()
 	..()
 	make_friend()
-	if (owner.stat != DEAD)
-		get_ghost()
+	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/on_life()
 	if(get_dist(owner, friend) > 9)
@@ -44,9 +43,6 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	if(owner.stat == DEAD)
-		qdel(src)
-		return
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s imaginary friend?", ROLE_PAI, null, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)

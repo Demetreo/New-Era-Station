@@ -439,14 +439,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -5;
-	pixel_y = 20
-	},
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 5;
-	pixel_y = 20
-	},
 /turf/open/floor/plasteel,
 /area/hippie/infiltrator_base)
 "aW" = (

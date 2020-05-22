@@ -1,6 +1,9 @@
 //yoinked from hippie (infiltrators)
 GLOBAL_VAR_INIT(powersink_transmitted, 0)
 
+/obj/item/powersink
+	icon = 'newerastation/icons/obj/device.dmi'
+
 /obj/item/powersink/process()
 	if(!attached)
 		set_mode(DISCONNECTED)
@@ -57,6 +60,6 @@ GLOBAL_VAR_INIT(powersink_transmitted, 0)
 	if(GLOB.powersink_transmitted >= target && !target_reached)
 		alert_radio.talk_into(src, "Power objective reached.", "Syndicate")
 		visible_message("<span class='notice'>[src] beeps.</span>")
-		playsound(src, 'sound/machines/ping.ogg', 50, 1)
+		playsound('sound/machines/ping.ogg', 50, 1)
 		target_reached = TRUE
 	return ..()

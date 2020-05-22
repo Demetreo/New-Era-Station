@@ -1,9 +1,6 @@
-//originally yoinked from hippie (infiltrators)
-//(comments are both from hippie and new era)
+//yoinked from hippie (infiltrators)
 #define MIN_POWER_DRAIN 25000000
 #define MAX_POWER_DRAIN 100000000
-#define MIN_TECH_DRAIN 10000
-#define MAX_TECH_DRAIN 20000
 
 GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie/stealthcruiser, /area/hippie/infiltrator_base)))
 
@@ -12,7 +9,6 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 	explanation_text = "Generic Infiltrator Objective!"
 	martyr_compatible = FALSE
 	var/item_type
-	var/linked_gear = list() //Saved infiltrator powersinks or miners to change their target var in case an admin edits the objectives.
 
 /datum/objective/infiltrator/New()
 	..()
@@ -68,14 +64,11 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 		if(!(item_type in T.contents))
 			var/obj/item/powersink/infiltrator/PS = new(T)
 			PS.target = target_amount
-			linked_gear += PS
 	update_explanation_text()
 
 /datum/objective/infiltrator/power/admin_edit(mob/admin)
 	var/new_amount = input(admin,"Select target amount IN WATTS:", "Power sink target") as null|num
 	target_amount = max(0, new_amount) //don't know what would happen with a negative value, and don't want to find out.
-	for(var/obj/item/infiltrator_miner/O in linked_gear)
-		O.target = target_amount
 	update_explanation_text()
 
 /datum/objective/infiltrator/power/find_target(dupe_search_range, blacklist) //needed because find_target() is called in infiltrator/team.dm
@@ -90,41 +83,6 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 
 /datum/objective/infiltrator/power/check_completion()
 	return !target_amount || (GLOB.powersink_transmitted >= target_amount)
-
-
-/datum/objective/infiltrator/miner
-	name = "infiltrator miner"
-	explanation_text = "Steal some sweet-ass nanotrasen technology."
-	item_type = /obj/item/infiltrator_miner
-
-/datum/objective/infiltrator/miner/New()
-	target_amount = rand(MIN_TECH_DRAIN, MAX_TECH_DRAIN)
-	for(var/turf/T in GLOB.infiltrator_objective_items)
-		if(!(item_type in T.contents))
-			var/obj/item/infiltrator_miner/M = new(T)
-			M.target = target_amount
-			linked_gear += M
-	update_explanation_text()
-
-/datum/objective/infiltrator/miner/admin_edit(mob/admin)
-	var/new_amount = input(admin,"Select target tech points:", "Mining some bitcoin, are we?") as null|num
-	target_amount = max(0, new_amount)
-	for(var/obj/item/infiltrator_miner/O in linked_gear)
-		O.target = target_amount
-	update_explanation_text()
-
-/datum/objective/infiltrator/miner/update_explanation_text()
-	..()
-	if(target_amount)
-		explanation_text = "Intercept [target_amount] technology points from [station_name()]'s research network."
-	else
-		explanation_text = "You were supposed to steal some sweet-ass nanotrasen technology, but something went wrong."
-
-/datum/objective/infiltrator/miner/find_target(dupe_search_range, blacklist)
-	return
-
-/datum/objective/infiltrator/miner/check_completion()
-	return !target_amount || (GLOB.infil_miner_transmitted >= target_amount)
 
 
 /datum/objective/infiltrator/kidnap
@@ -154,6 +112,6 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/hippie
 
 /datum/objective/infiltrator/kidnap/check_completion()
 	if (!target)
-		return TRUE
+		return TRUE //new era: prevents runtime; also considers complete if target wasn't found on find_target
 	var/target_area = get_area(target.current)
 	return (target.current && target.current.suiciding) || ((considered_alive(target) || issilicon(target.current)) && is_type_in_typecache(target_area, GLOB.infiltrator_kidnap_areas))
