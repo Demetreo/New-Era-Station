@@ -1,4 +1,4 @@
-/obj/item/organ/cyberimp/arm/toolset
+/obj/item/organ/cyberimp/arm/toolset/abductor
 	name = "abductor integrated toolset implant"
 	desc = "A powerful version of the regular toolset, designed to be installed on subject's arm. Contains advanced versions of every tool and more!"
 	contents = newlist(/obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/weldingtool/abductor,
