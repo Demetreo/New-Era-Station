@@ -1,0 +1,19 @@
+author: Trigg
+delete-after: true
+changes:
+  - bugfix: The bluespace compression kit now can now be properly examined
+  - bugfix: Servers with their maintenance panel open will no longer appear as operational
+  - bugfix: Did you know construction paper was supposed to have a red variant? It
+      didn't because someone forgot a "#"
+  - rscadd: 'Now, INFILTRATOR SHIT:'
+  - rscadd: I have been told by Steamport himself that he coded infiltrators for oracle
+      in the first place. So, less credit for oracle, more credit for him... I guess?
+      (whoopsie)
+  - rscadd: 'A brand new objective has been added: Steal techpoints from Nanotrasen!'
+  - bugfix: Powersinks now audibly beep once their target objective has been reached
+      (as originally intended)
+  - tweak: Kidnap objectives now also count if the target has been turned into a silicon.
+      DON'T TAKE THIS AS A REBRANDING OF THE OBJECTIVE TO "haha kill debrain and put
+      in MMI" - Admins WILL whoop you.
+  - spellcheck: The "Syndicate Infiltrator" antag preference is now neatly capitalized.
+      Ah, the OCDs.
