@@ -1,5 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - rscadd: in-game widescreen toggle
-  - code_imp: changed some interface stuff for the new button
