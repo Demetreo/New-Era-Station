@@ -15,8 +15,7 @@
 /datum/brain_trauma/severe/split_personality/on_gain()
 	..()
 	make_backseats()
-	if (owner.stat != DEAD)
-		get_ghost()
+	get_ghost()
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
@@ -24,9 +23,6 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	if(owner.stat == DEAD)
-		qdel(src)
-		return
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
