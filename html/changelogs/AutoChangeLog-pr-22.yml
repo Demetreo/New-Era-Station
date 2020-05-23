@@ -1,0 +1,5 @@
+author: Trigg
+delete-after: true
+changes:
+  - rscadd: Briefcase launchpad now has a neat little HUD to help you see where it's
+      targeting.
