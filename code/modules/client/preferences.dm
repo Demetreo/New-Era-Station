@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clientfps = 40
 	var/updated_fps = 0
-	var/widescreenpref = TRUE
+	var/widescreenpref = FALSE
 	var/parallax
 
 	var/ambientocclusion = TRUE
