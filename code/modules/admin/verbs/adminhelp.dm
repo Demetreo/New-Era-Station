@@ -16,7 +16,8 @@
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	GLOB.ahelp_tickets.BrowseTickets(src)
+	//new era: now works.
+	GLOB.ahelp_tickets.BrowseTickets(usr)
 
 //
 // Ticket manager
@@ -426,11 +427,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	data["sender"] = initiator_key_name
 	data["world_time"] = world.time
 	data["antag_status"] = "None"
-	if(initiator)
-		var/mob/living/M = initiator.mob
-		if(M?.mind?.antag_datums)
-			var/datum/antagonist/AD = M.mind.antag_datums[1]
-			data["antag_status"] = AD.name
+	var/mob/living/M = initiator.mob
+	if(M?.mind?.antag_datums)
+		var/datum/antagonist/AD = M.mind.antag_datums[1]
+		data["antag_status"] = AD.name
 	data["messages"] = list()
 	for(var/datum/ticket_interaction/message in _interactions)
 		var/list/msg = list(

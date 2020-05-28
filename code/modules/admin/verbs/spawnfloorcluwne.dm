@@ -7,11 +7,6 @@
 	if(!check_rights(R_FUN))
 		return
 
-	if(alert(usr, "Are you sure you want to do this, you may be punished harshly for this", "Unleash floor demon", "YES", "HELL NO") != "YES")
-		log_admin("[key_name(usr)] almost spawned a floor cluwne!")
-		message_admins("[key_name(usr)] almost spawned a floor cluwne!")
-		return
-
 	var/turf/T = get_turf(usr)
 	target = input("Any specific target in mind? Please note only live, non cluwned, human targets are valid.", "Target", target) as null|anything in GLOB.player_list
 	if(target && ishuman(target))
