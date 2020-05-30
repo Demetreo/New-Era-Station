@@ -289,6 +289,11 @@
 	icon = "goose"
 	desc = "Drink till you puke and/or break the laws of reality!"
 
+/datum/barsign/vsfdante
+	name = "vsf dante"
+	icon = "vsfdante"
+	desc = "vsf dante"
+
 /datum/barsign/hiddensigns
 	hidden = TRUE
 
