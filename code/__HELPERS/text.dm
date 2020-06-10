@@ -240,18 +240,6 @@
 	var/list/chars_to_add[max(charcount + 1, 0)]
 	return text + jointext(chars_to_add, char)
 
-//Adds 'char' ahead of 'text' until there are 'count' characters total
-/proc/add_leading(text, count, char = " ")
-	var/charcount = count - length_char(text)
-	var/list/chars_to_add[max(charcount + 1, 0)]
-	return jointext(chars_to_add, char) + text
-
-//Adds 'char' behind 'text' until there are 'count' characters total
-/proc/add_trailing(text, count, char = " ")
-	var/charcount = count - length_char(text)
-	var/list/chars_to_add[max(charcount + 1, 0)]
-	return text + jointext(chars_to_add, char)
-
 //Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
