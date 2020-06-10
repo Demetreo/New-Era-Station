@@ -218,10 +218,10 @@
 					new_message += pick("uh","erm")
 					break
 				else
-					var/list/charlist = string2charlist(word) // Stupid shit code
+					var/list/charlist = text2charlist(word)
+					charlist.len = round(charlist.len * 0.5, 1)
 					shuffle_inplace(charlist)
-					charlist.len = round(charlist.len * 0.5,1)
-					new_message += html_encode(jointext(charlist,"")) + suffix
+					new_message += jointext(charlist, "") + suffix
 
 		message = jointext(new_message, " ")
 

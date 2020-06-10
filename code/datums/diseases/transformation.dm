@@ -337,7 +337,7 @@
 
 /datum/disease/transformation/felinid
 	name = "Nano-Feline Assimilative Toxoplasmosis"
-	cure_text = "Something that would kill off the tiny cats." 
+	cure_text = "Something that would kill off the tiny cats."
 	spread_text = "Acute"
 	disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	cures = list(/datum/reagent/consumable/coco) //kills all the tiny cats that infected your organism
@@ -440,7 +440,7 @@
 	name = "Necropolis Infestation"
 	cure_text = "The healing Vitrium Froth of some Lavaland flora"
 	cures = list(/datum/reagent/consumable/vitfro)
-	cure_chance = 10
+	cure_chance = 10 //about 10 seconds/5 units of Froth to heal. Takes a decent gathering period but just shy of the amount that'll fatten you
 	stage_prob = 5
 	agent = "Legion droppings"
 	desc = "Who knew that spreading the primordial goop of a vile entity would take a toll on the body?"
