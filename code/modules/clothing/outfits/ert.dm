@@ -342,7 +342,7 @@
 	id = /obj/item/card/id/centcom
 	belt = /obj/item/pda/clown
 	ears = /obj/item/radio/headset/headset_cent
-	uniform = /obj/item/clothing/under/rank/civilian/clown
+	uniform = /obj/item/clothing/under/rank/clown
 	back = /obj/item/storage/backpack/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
