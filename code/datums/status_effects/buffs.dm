@@ -467,6 +467,7 @@
 	ADD_TRAIT(owner, TRAIT_NECROPOLIS_INFECTED, "legion_core_trait")
 	if(owner.z == 5)
 		power = 2
+	//new era: nerfed from 50 to 35
 	owner.adjustBruteLoss(-35 * power)
 	owner.adjustFireLoss(-35 * power)
 	owner.cure_nearsighted()

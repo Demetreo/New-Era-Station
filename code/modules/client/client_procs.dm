@@ -897,6 +897,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
 
+	//new era: widescreen.
 	if(prefs && CONFIG_GET(string/default_view))
 		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
 			new_size = "15x15"

@@ -18,7 +18,7 @@
 		H.add_hud_to(user)
 
 /obj/item/launchpad_remote/ui_close(mob/user)
-	. =..() //just in case upstream decides to implement this in the future
+	. = ..() //just in case upstream decides to implement this in the future
 	to_chat(user, "<span class='notice'>The display quickly fades.</span>")
 	if(hud_on)
 		hud_on = FALSE

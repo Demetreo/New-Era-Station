@@ -96,7 +96,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clientfps = 40
 	var/updated_fps = 0
-	var/widescreenpref = FALSE
+	var/widescreenpref = FALSE //new era: widescreen
+
 	var/parallax
 
 	var/ambientocclusion = TRUE
@@ -584,7 +585,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
+			//new era: widescreen
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
+
 
 			button_name = pixel_size
 			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
@@ -1629,7 +1632,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
 
-				if("widescreenpref")
+				if("widescreenpref") //new era: widescreen
 					widescreenpref = !widescreenpref
 					user.client.change_view(CONFIG_GET(string/default_view))
 				if("hotkeys")
@@ -1715,7 +1718,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("ghost_pda")
 					chat_toggles ^= CHAT_GHOSTPDA
-				
+
 				if("ghost_laws")
 					chat_toggles ^= CHAT_GHOSTLAWS
 
