@@ -90,10 +90,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// beestation, send to discord
 	if(holder?.fakekey)
 		discordsendmsg("ooc", "**[holder.fakekey]:** [msg]")
-		send2irc("**[holder.fakekey]:** [msg]", CONFIG_GET(string/discord_ooc_relay)) //new era, sends ooc to discord?... if it works
+		send2discord("**[holder.fakekey]:** [msg]", CONFIG_GET(string/discord_ooc_relay)) //new era, sends ooc to discord?... if it works
 	else
 		discordsendmsg("ooc", "**[key]:** [msg]")
-		send2irc("**[key]:** [msg]", CONFIG_GET(string/discord_ooc_relay)) //new era, sends ooc to discord?... if it works
+		send2discord("**[key]:** [msg]", CONFIG_GET(string/discord_ooc_relay)) //new era, sends ooc to discord?... if it works
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
